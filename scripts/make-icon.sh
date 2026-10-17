@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+ICONSET="$(mktemp -d)/AppIcon.iconset"
+swift scripts/make-icon.swift "$ICONSET"
+iconutil -c icns "$ICONSET" -o Resources/AppIcon.icns
+
+echo "Created Resources/AppIcon.icns"
