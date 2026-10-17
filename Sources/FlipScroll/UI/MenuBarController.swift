@@ -27,6 +27,11 @@ final class MenuBarController: NSObject {
         action: #selector(MenuBarController.toggleTrackpad),
         keyEquivalent: ""
     )
+    private let launchAtLoginItem = NSMenuItem(
+        title: "Launch at Login",
+        action: #selector(MenuBarController.toggleLaunchAtLogin),
+        keyEquivalent: ""
+    )
 
     init(settings: SettingsStore) {
         self.settings = settings
@@ -47,7 +52,8 @@ final class MenuBarController: NSObject {
 
     private func makeMenu() -> NSMenu {
         let menu = NSMenu()
-        for item in [permissionItem, enabledItem, mouseItem, trackpadItem] {
+        menu.delegate = self
+        for item in [permissionItem, enabledItem, mouseItem, trackpadItem, launchAtLoginItem] {
             item.target = self
         }
         menu.addItem(permissionItem)
@@ -56,6 +62,8 @@ final class MenuBarController: NSObject {
         menu.addItem(.separator())
         menu.addItem(mouseItem)
         menu.addItem(trackpadItem)
+        menu.addItem(.separator())
+        menu.addItem(launchAtLoginItem)
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(
             title: "Quit FlipScroll",
@@ -70,6 +78,7 @@ final class MenuBarController: NSObject {
         enabledItem.state = options.enabled ? .on : .off
         mouseItem.state = options.reverseMouse ? .on : .off
         trackpadItem.state = options.reverseTrackpad ? .on : .off
+        launchAtLoginItem.state = LaunchAtLogin.isEnabled ? .on : .off
         statusItem.button?.appearsDisabled = !options.enabled
     }
 
@@ -85,4 +94,21 @@ final class MenuBarController: NSObject {
     @objc private func toggleMouse() { update { $0.reverseMouse.toggle() } }
     @objc private func toggleTrackpad() { update { $0.reverseTrackpad.toggle() } }
     @objc private func openAccessibilitySettings() { Accessibility.openSettings() }
+
+    @objc private func toggleLaunchAtLogin() {
+        do {
+            try LaunchAtLogin.setEnabled(!LaunchAtLogin.isEnabled)
+        } catch {
+            NSApp.activate(ignoringOtherApps: true)
+            NSAlert(error: error).runModal()
+        }
+        refresh()
+    }
+}
+
+extension MenuBarController: NSMenuDelegate {
+    // Login items can change in System Settings, so read them on every open.
+    func menuWillOpen(_ menu: NSMenu) {
+        refresh()
+    }
 }

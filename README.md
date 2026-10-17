@@ -12,9 +12,10 @@ Keep "Natural scrolling" on in System Settings, and FlipScroll reverses only the
 ## Build
 
 ```bash
-./scripts/build-app.sh
-open build/FlipScroll.app
+./scripts/install.sh
 ```
+
+This builds the app, copies it to `/Applications` and opens it. Use `./scripts/build-app.sh` to only build into `build/`.
 
 On first launch, allow FlipScroll in **System Settings → Privacy & Security → Accessibility**.
 
@@ -23,3 +24,4 @@ On first launch, allow FlipScroll in **System Settings → Privacy & Security �
 - **Enabled**: turns all reversing on or off
 - **Reverse Mouse**: reverses the mouse wheel
 - **Reverse Trackpad**: reverses the trackpad
+- **Launch at Login**: starts FlipScroll when you log in
