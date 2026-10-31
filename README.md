@@ -31,6 +31,7 @@ If it stops working after an update, remove FlipScroll from that list with **–
 - **Enabled**: turns all reversing on or off
 - **Reverse Mouse**: reverses the mouse wheel
 - **Reverse Trackpad**: reverses the trackpad
+- **Speed Keys** (off by default): hold ⌥ to scroll the mouse 4x faster, or ⌃ to scroll it 4x slower
 - **Launch at Login**: starts FlipScroll when you log in
 
 ## Build from source
