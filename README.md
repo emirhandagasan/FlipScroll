@@ -34,6 +34,10 @@ If it stops working after an update, remove FlipScroll from that list with **–
 - **Speed Keys** (off by default): hold ⌥ to scroll the mouse 4x faster, or ⌃ to scroll it 4x slower
 - **Launch at Login**: starts FlipScroll when you log in
 
+## Known limitations
+
+Magic Mouse and some free-spinning wheels send smooth scroll events, so FlipScroll may treat them as a trackpad.
+
 ## Build from source
 
 Requires Swift 5.9 or later. If you don't have it, install the Command Line Tools:
