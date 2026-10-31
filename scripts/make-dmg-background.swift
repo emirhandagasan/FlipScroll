@@ -26,13 +26,13 @@ func drawBackground() {
     // Arrow between the icons, at their vertical center.
     accent.setFill()
     NSBezierPath(
-        roundedRect: NSRect(x: 280, y: 160, width: 80, height: 12),
+        roundedRect: NSRect(x: 280, y: 204, width: 80, height: 12),
         xRadius: 6, yRadius: 6
     ).fill()
     let head = NSBezierPath()
-    head.move(to: NSPoint(x: 385, y: 166))
+    head.move(to: NSPoint(x: 385, y: 210))
+    head.line(to: NSPoint(x: 350, y: 232))
     head.line(to: NSPoint(x: 350, y: 188))
-    head.line(to: NSPoint(x: 350, y: 144))
     head.close()
     head.fill()
 }
