@@ -4,21 +4,27 @@ A small macOS menu bar app that lets the mouse and the trackpad scroll in differ
 
 Keep "Natural scrolling" on in System Settings, and FlipScroll reverses only the mouse wheel.
 
-Works on macOS 13 or later, on both Apple Silicon and Intel Macs.
+Requires macOS 13 or later, on an Apple Silicon or Intel Mac. Tested on macOS 26.
 
 ## Install
 
-1. Download the latest `FlipScroll-x.y.z.dmg` from [Releases](https://github.com/emirhandagasan/FlipScroll/releases/latest).
-2. Open it and drag **FlipScroll** into **Applications**.
-3. Open FlipScroll from Applications.
+### 1. Download and install
 
-FlipScroll is not notarized by Apple, so macOS blocks the first launch. To allow it:
+Download the latest `.dmg` file from [Releases](https://github.com/emirhandagasan/FlipScroll/releases/latest). Open it and drag **FlipScroll** onto **Applications**.
 
-1. Click **Done** on the warning.
-2. Go to **System Settings → Privacy & Security**.
-3. Scroll down and click **Open Anyway** next to the FlipScroll message, then confirm.
+![Drag FlipScroll onto Applications](docs/images/dmg-install.png)
 
-This is needed only once.
+### 2. Open FlipScroll
+
+Open FlipScroll from your Applications folder. The first time, macOS shows this warning because FlipScroll is not verified by Apple. Click **Done**, not **Move to Trash**.
+
+![macOS warning on first launch](docs/images/gatekeeper-warning.png)
+
+### 3. Allow it to open
+
+Go to **System Settings → Privacy & Security**, scroll down to **Security**, and click **Open Anyway**. Confirm with your password or Touch ID. You only need to do this once.
+
+![Open Anyway in Privacy & Security](docs/images/open-anyway.png)
 
 ## Permission
 
