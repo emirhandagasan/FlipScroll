@@ -27,6 +27,11 @@ final class MenuBarController: NSObject {
         action: #selector(MenuBarController.toggleTrackpad),
         keyEquivalent: ""
     )
+    private let speedKeysItem = NSMenuItem(
+        title: "Speed Keys (⌥ Fast, ⌃ Precise)",
+        action: #selector(MenuBarController.toggleSpeedKeys),
+        keyEquivalent: ""
+    )
     private let launchAtLoginItem = NSMenuItem(
         title: "Launch at Login",
         action: #selector(MenuBarController.toggleLaunchAtLogin),
@@ -53,7 +58,8 @@ final class MenuBarController: NSObject {
     private func makeMenu() -> NSMenu {
         let menu = NSMenu()
         menu.delegate = self
-        for item in [permissionItem, enabledItem, mouseItem, trackpadItem, launchAtLoginItem] {
+        let items = [permissionItem, enabledItem, mouseItem, trackpadItem, speedKeysItem, launchAtLoginItem]
+        for item in items {
             item.target = self
         }
         menu.addItem(permissionItem)
@@ -62,6 +68,7 @@ final class MenuBarController: NSObject {
         menu.addItem(.separator())
         menu.addItem(mouseItem)
         menu.addItem(trackpadItem)
+        menu.addItem(speedKeysItem)
         menu.addItem(.separator())
         menu.addItem(launchAtLoginItem)
         menu.addItem(.separator())
@@ -78,6 +85,7 @@ final class MenuBarController: NSObject {
         enabledItem.state = options.enabled ? .on : .off
         mouseItem.state = options.reverseMouse ? .on : .off
         trackpadItem.state = options.reverseTrackpad ? .on : .off
+        speedKeysItem.state = options.speedKeys ? .on : .off
         launchAtLoginItem.state = LaunchAtLogin.isEnabled ? .on : .off
         statusItem.button?.appearsDisabled = !options.enabled
     }
@@ -93,6 +101,7 @@ final class MenuBarController: NSObject {
     @objc private func toggleEnabled() { update { $0.enabled.toggle() } }
     @objc private func toggleMouse() { update { $0.reverseMouse.toggle() } }
     @objc private func toggleTrackpad() { update { $0.reverseTrackpad.toggle() } }
+    @objc private func toggleSpeedKeys() { update { $0.speedKeys.toggle() } }
     @objc private func openAccessibilitySettings() { Accessibility.openSettings() }
 
     @objc private func toggleLaunchAtLogin() {

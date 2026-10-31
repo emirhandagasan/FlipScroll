@@ -52,8 +52,14 @@ final class ScrollEventTap {
             if let tap { CGEvent.tapEnable(tap: tap, enable: true) }
         case .scrollWheel:
             let current = options.withLock { $0 }
-            if current.shouldInvert(detector.source(of: event)) {
+            let source = detector.source(of: event)
+            if current.shouldInvert(source) {
                 event.invertScrollDeltas()
+            }
+            if current.usesSpeedKeys(source), let speed = ScrollSpeed(flags: event.flags) {
+                event.multiplyScrollDeltas(by: speed.factor)
+                // Apps should not treat this as their own modifier shortcut.
+                event.flags.subtract([.maskAlternate, .maskControl])
             }
         default:
             break
