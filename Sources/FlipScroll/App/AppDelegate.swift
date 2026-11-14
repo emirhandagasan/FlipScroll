@@ -12,7 +12,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.menuBar = menuBar
 
         eventTap.update(settings.options)
+        watchNaturalScrolling()
         startEventTap()
+    }
+
+    // The user can change the system setting at any time.
+    private func watchNaturalScrolling() {
+        Task {
+            while true {
+                eventTap.updateSystemNaturalScrolling(NaturalScrolling.isEnabled)
+                try? await Task.sleep(for: .seconds(5))
+            }
+        }
     }
 
     private func startEventTap() {

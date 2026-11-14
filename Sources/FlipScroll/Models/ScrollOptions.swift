@@ -5,15 +5,17 @@ enum ScrollSource: Sendable {
 
 struct ScrollOptions: Equatable, Sendable {
     var enabled = true
-    var reverseMouse = true
+    var reverseMouse = false
     var reverseTrackpad = false
     var speedKeys = false
 
-    func shouldInvert(_ source: ScrollSource) -> Bool {
+    // Unreversed, the mouse scrolls the classic way and the trackpad the natural way,
+    // whatever the system setting is.
+    func shouldInvert(_ source: ScrollSource, systemNatural: Bool) -> Bool {
         guard enabled else { return false }
         switch source {
-        case .mouse: return reverseMouse
-        case .trackpad: return reverseTrackpad
+        case .mouse: return systemNatural != reverseMouse
+        case .trackpad: return systemNatural == reverseTrackpad
         }
     }
 

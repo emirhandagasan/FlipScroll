@@ -7,8 +7,9 @@ protocol SettingsStore: AnyObject {
 final class UserDefaultsSettingsStore: SettingsStore {
     private enum Key {
         static let enabled = "enabled"
-        static let reverseMouse = "reverseMouse"
-        static let reverseTrackpad = "reverseTrackpad"
+        // New names, since "reversed" now means against each device's usual direction.
+        static let reverseMouse = "mouseReversed"
+        static let reverseTrackpad = "trackpadReversed"
         static let speedKeys = "speedKeys"
     }
 

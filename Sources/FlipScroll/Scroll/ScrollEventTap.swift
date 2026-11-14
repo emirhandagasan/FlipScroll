@@ -4,8 +4,13 @@ import os
 
 // Catches scroll events before apps see them and inverts the selected sources.
 final class ScrollEventTap {
+    private struct State {
+        var options = ScrollOptions()
+        var isSystemNatural = true
+    }
+
     private let detector: ScrollSourceDetector
-    private let options = OSAllocatedUnfairLock(initialState: ScrollOptions())
+    private let state = OSAllocatedUnfairLock(initialState: State())
     private var tap: CFMachPort?
 
     init(detector: ScrollSourceDetector) {
@@ -13,7 +18,11 @@ final class ScrollEventTap {
     }
 
     func update(_ newOptions: ScrollOptions) {
-        options.withLock { $0 = newOptions }
+        state.withLock { $0.options = newOptions }
+    }
+
+    func updateSystemNaturalScrolling(_ enabled: Bool) {
+        state.withLock { $0.isSystemNatural = enabled }
     }
 
     // Returns false while Accessibility access is missing.
@@ -51,12 +60,12 @@ final class ScrollEventTap {
             // macOS may switch the tap off; turn it back on.
             if let tap { CGEvent.tapEnable(tap: tap, enable: true) }
         case .scrollWheel:
-            let current = options.withLock { $0 }
+            let current = state.withLock { $0 }
             let source = detector.source(of: event)
-            if current.shouldInvert(source) {
+            if current.options.shouldInvert(source, systemNatural: current.isSystemNatural) {
                 event.invertScrollDeltas()
             }
-            if current.usesSpeedKeys(source), let speed = ScrollSpeed(flags: event.flags) {
+            if current.options.usesSpeedKeys(source), let speed = ScrollSpeed(flags: event.flags) {
                 event.multiplyScrollDeltas(by: speed.factor)
                 // Apps should not treat this as their own modifier shortcut.
                 event.flags.subtract([.maskAlternate, .maskControl])

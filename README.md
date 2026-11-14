@@ -2,7 +2,7 @@
 
 A small macOS menu bar app that lets the mouse and the trackpad scroll in different directions.
 
-Keep "Natural scrolling" on in System Settings, and FlipScroll reverses only the mouse wheel.
+The mouse scrolls the classic way, like on Windows, and the trackpad the natural way, like on iPhone.
 
 Requires macOS 13 or later, on an Apple Silicon or Intel Mac. Tested on macOS 26.
 
@@ -34,9 +34,9 @@ If it stops working after an update, remove FlipScroll from that list with **–
 
 ## Menu
 
-- **Enabled**: turns all reversing on or off
-- **Reverse Mouse**: reverses the mouse wheel
-- **Reverse Trackpad**: reverses the trackpad
+- **Enabled**: turns FlipScroll on or off
+- **Reverse Mouse**: makes the mouse scroll the other way
+- **Reverse Trackpad**: makes the trackpad scroll the other way
 - **Speed Keys** (off by default): hold ⌥ to scroll the mouse 4x faster, or ⌃ to scroll it 4x slower
 - **Launch at Login**: starts FlipScroll when you log in
 
